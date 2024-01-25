@@ -17,10 +17,10 @@ weight = int(input)
 i_max = weight
 j_max = weight//12
 k_max = weight//16
-for i in range(i_max):
+for i in range(i_max+1):
     st.write("____")
-    for j in range(j_max):
-        for k in range(k_max):
+    for j in range(j_max+1):
+        for k in range(k_max+1):
               sum = i*1+j*12+k*16
               if sum == weight:
                   st.write(f"({i},{j},{k})")
