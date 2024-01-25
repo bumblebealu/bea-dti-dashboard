@@ -18,6 +18,7 @@ i_max = weight
 j_max = weight//12
 k_max = weight//16
 for i in range(i_max):
+    st.write("____")
     for j in range(j_max):
         for k in range(k_max):
               sum = i*1+j*12+k*16
