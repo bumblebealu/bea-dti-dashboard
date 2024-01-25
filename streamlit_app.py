@@ -22,4 +22,5 @@ for i in range(i_max+1):
         for k in range(k_max+1):
               sum = i*1+j*12+k*16
               if sum == weight:
-                  st.write(f"({i},{j},{k})")
+                  if 3*i <= j:
+                      st.write(f"({i},{j},{k})")
