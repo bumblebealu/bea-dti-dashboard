@@ -15,8 +15,8 @@ st.markdown(
 input = st.text_input("Enter Molecular Formula Here As an Integer")
 weight = int(input)
 i_max = weight
-j_max = weight/12
-k_max = weight/16
+j_max = weight//12
+k_max = weight//16
 for i in range(i_max):
     for j in range(j_max):
         for k in range(k_max):
