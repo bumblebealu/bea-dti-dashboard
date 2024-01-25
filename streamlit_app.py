@@ -12,7 +12,7 @@ st.markdown(
 
     )
 
-input = st.number_input("Enter Molecular Formula Here As an Integer", step = "int")
+input = st.number_input("Enter Molecular Formula Here As an Integer")
 weight = input
 i_max = weight
 j_max = weight//12
