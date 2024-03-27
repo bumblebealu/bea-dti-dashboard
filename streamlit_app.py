@@ -1,27 +1,28 @@
 import streamlit as st
+import folium
 
-st.write("Chem Molecule Calculator")
+def main():
+    # Set up your Streamlit app layout
+    st.title("Map with Line")
+    st.sidebar.header("Parameters")
 
+    # Define the coordinates for Location A and Location B
+    # These are just example coordinates, replace them with your actual coordinates
+    location_a = (40.7128, -74.0060)  # New York City
+    location_b = (34.0522, -118.2437)  # Los Angeles
 
+    # Create a Folium map centered at Location A
+    m = folium.Map(location=location_a, zoom_start=5)
 
-st.markdown(
-    """
-    To calculate molecular structure simply enter the molecular weight. 
-    It will spit out all possible comginations of (H,C,O)
-    """
+    # Add markers for Location A and Location B
+    folium.Marker(location=location_a, popup="Location A", icon=folium.Icon(color='blue')).add_to(m)
+    folium.Marker(location=location_b, popup="Location B", icon=folium.Icon(color='red')).add_to(m)
 
-    )
+    # Draw a line between Location A and Location B
+    folium.PolyLine(locations=[location_a, location_b], color='green', weight=3).add_to(m)
 
-input = st.number_input("Enter Molecular Formula Here As an Integer")
-weight = int(input)
-i_max = weight
-j_max = weight//12
-k_max = weight//16
-for i in range(i_max+1):
-    for j in range(j_max+1):
-        for k in range(k_max+1):
-              sum = i*1+j*12+k*16
-              if sum == weight:
-                  if i <= 3*j:
-                      if 2*j > k:
-                          st.write(f"({i},{j},{k})")
+    # Display the map in the Streamlit app
+    folium_static(m)
+
+if __name__ == "__main__":
+    main()
