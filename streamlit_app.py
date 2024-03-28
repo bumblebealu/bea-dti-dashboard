@@ -45,6 +45,7 @@ def main():
     folium_static(m)
     if st.button(":)"):
         path = '/0000-0003-4998-7259'
+        path = st.write("Write Path Here")
         row = find_function(path,indexed_journeys_df)
         plot_map(row)
 
