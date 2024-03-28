@@ -5,7 +5,6 @@ from streamlit_folium import folium_static
 def main():
     # Set up your Streamlit app layout
     st.title("Map with Line")
-    st.sidebar.header("Parameters")
 
     # Define the coordinates for Location A and Location B
     # These are just example coordinates, replace them with your actual coordinates
