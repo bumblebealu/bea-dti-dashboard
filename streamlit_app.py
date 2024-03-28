@@ -21,7 +21,7 @@ def plot_map(row):
 def main():
     journeys_df = pd.read_hdf('author_journeys.h5')
     indexed_journeys_df = journeys_df.set_index('@path', inplace=False)
-
+    st.write(indexed_journeys_df)
     # Set up your Streamlit app layout
     st.title("Map with Line")
 
