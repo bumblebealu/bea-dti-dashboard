@@ -3,7 +3,7 @@ import folium
 import pandas as pd
 from streamlit_folium import folium_static
 
-def find_function(path):
+def find_function(path,indexed_journeys_df):
     row = indexed_journeys_df.loc[path]
     return row
 
@@ -44,7 +44,7 @@ def main():
     folium_static(m)
     if st.button(":)"):
         path = '/0000-0003-4999-5734'
-        row = find_function(path)
+        row = find_function(path,indexed_journeys_df)
         plot_map(row)
 
 if __name__ == "__main__":
