@@ -8,7 +8,8 @@ def find_function(path,indexed_journeys_df):
     return row
 
 def plot_map(row):
-    m = folium.Map(location=location_a, zoom_start=5)
+    start_loc = (row['unique_lats'][0],row['unique_longs'][0])
+    m = folium.Map(location=start_loc, zoom_start=5)
     for i, val in enumerate(my_row['unique_countries']):
         country = val
         location = (my_row['unique_lats'][i], my_row['unique_longs'][i])
