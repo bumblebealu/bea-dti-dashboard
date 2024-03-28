@@ -18,6 +18,9 @@ def plot_map(row):
     folium_static(m)
 
 def main():
+    journeys_df = pd.read_hdf('author_journeys.h5')
+    indexed_journeys_df = journeys_df.set_index('@path', inplace=False)
+
     # Set up your Streamlit app layout
     st.title("Map with Line")
 
@@ -38,6 +41,10 @@ def main():
 
     # Display the map in the Streamlit app
     folium_static(m)
+    if st.button(":)"):
+        path = '/0000-0003-4999-5734'
+        row = find_function(path)
+        plot_map(row)
 
 if __name__ == "__main__":
     main()
