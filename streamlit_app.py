@@ -44,7 +44,7 @@ def main():
     # Display the map in the Streamlit app
     folium_static(m)
     if st.button(":)"):
-        path = '/0000-0003-4999-5734'
+        path = '/0000-0003-4998-7259'
         row = find_function(path,indexed_journeys_df)
         plot_map(row)
 
