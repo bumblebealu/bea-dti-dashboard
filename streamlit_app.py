@@ -20,7 +20,9 @@ def plot_map(my_row):
     folium_static(m)
 
 def main():
+    alt_df = pd.read_hdf('Path_By_Researchers_With_Year.h5')
     journeys_df = pd.read_hdf('author_journeys.h5')
+    journeys_df = alt_df
     indexed_journeys_df = journeys_df.set_index('@path', inplace=False)
     # Set up your Streamlit app layout
     st.title('Researcher Migration')
