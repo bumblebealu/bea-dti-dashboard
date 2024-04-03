@@ -24,24 +24,6 @@ def main():
     indexed_journeys_df = journeys_df.set_index('@path', inplace=False)
     # Set up your Streamlit app layout
     st.title('Researcher Migration')
-
-    # # Define the coordinates for Location A and Location B
-    # # These are just example coordinates, replace them with your actual coordinates
-    # location_a = (40.7128, -74.0060)  # New York City
-    # location_b = (34.0522, -118.2437)  # Los Angeles
-
-    # # Create a Folium map centered at Location A
-    # m = folium.Map(location=location_a, zoom_start=5)
-
-    # # Add markers for Location A and Location B
-    # folium.Marker(location=location_a, popup="Location A", icon=folium.Icon(color='blue')).add_to(m)
-    # folium.Marker(location=location_b, popup="Location B", icon=folium.Icon(color='red')).add_to(m)
-
-    # # Draw a line between Location A and Location B
-    # folium.PolyLine(locations=[location_a, location_b], color='green', weight=3).add_to(m)
-
-    # Display the map in the Streamlit app
-    #folium_static(m)
     path = '/0000-0003-4998-7259'
     path = st.text_input("Write Path Here",path)
     row = find_function(path,indexed_journeys_df)
