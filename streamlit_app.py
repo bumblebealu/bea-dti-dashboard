@@ -23,7 +23,7 @@ def main():
     journeys_df = pd.read_hdf('author_journeys.h5')
     indexed_journeys_df = journeys_df.set_index('@path', inplace=False)
     # Set up your Streamlit app layout
-    st.title('Researcher Migration'))
+    st.title('Researcher Migration')
 
     # # Define the coordinates for Location A and Location B
     # # These are just example coordinates, replace them with your actual coordinates
