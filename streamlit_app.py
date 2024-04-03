@@ -13,7 +13,7 @@ def plot_map(my_row):
     for i, val in enumerate(my_row['country']):
         country = val
         location = (my_row['latitude'][i], my_row['longitude'][i])
-        popup = f"Hi {my_row['title'][i]} hi {val} hi {my_row['year'][i]}"
+        popup = f"{my_row['title'][i]} {val} {my_row['year'][i]}"
         folium.Marker(location=location, popup=popup, icon=folium.Icon(color='blue')).add_to(m)
         if i < len(my_row['country'])-1:
             location_next = (my_row['latitude'][i+1], my_row['longitude'][i+1])
