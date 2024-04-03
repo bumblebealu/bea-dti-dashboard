@@ -41,7 +41,7 @@ def main():
     # folium.PolyLine(locations=[location_a, location_b], color='green', weight=3).add_to(m)
 
     # Display the map in the Streamlit app
-    folium_static(m)
+    #folium_static(m)
     path = '/0000-0003-4998-7259'
     path = st.text_input("Write Path Here",path)
     row = find_function(path,indexed_journeys_df)
