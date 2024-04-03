@@ -8,14 +8,14 @@ def find_function(path,indexed_journeys_df):
     return row
 
 def plot_map(my_row):
-    start_loc = (my_row['unique_lats'][0],my_row['unique_longs'][0])
+    start_loc = (my_row['latitude'][0],my_row['longitude'][0])
     m = folium.Map(location=start_loc, zoom_start=5)
-    for i, val in enumerate(my_row['unique_countries']):
+    for i, val in enumerate(my_row['country']):
         country = val
-        location = (my_row['unique_lats'][i], my_row['unique_longs'][i])
+        location = (my_row['latitude'][i], my_row['longitude'][i])
         folium.Marker(location=location, popup=val, icon=folium.Icon(color='blue')).add_to(m)
-        if i < len(my_row['unique_countries'])-1:
-            location_next = (my_row['unique_lats'][i+1], my_row['unique_longs'][i+1])
+        if i < len(my_row['country'])-1:
+            location_next = (my_row['unique_lats'][i+1], my_row['longitude'][i+1])
             folium.PolyLine(locations=[location, location_next], color='green', weight=3).add_to(m)
     folium_static(m)
 
