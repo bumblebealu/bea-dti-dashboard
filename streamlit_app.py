@@ -8,7 +8,7 @@ import scipy.sparse
 @st.cache
 def load_tfidf():
     auths = scipy.sparse.load_npz("transformed_authors.npz")
-    titles = scipy.sparse.load_npz("transofmed_titles.npz")
+    titles = scipy.sparse.load_npz("transformed_titles.npz")
     return auths, titles
 
 
