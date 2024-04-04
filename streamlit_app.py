@@ -38,12 +38,22 @@ def advanced_find(name, title):
     # word_vector = trainer.transform(word_list) 
     # st.write(word_vector)
     # find the cosine similarity between the power search and the first 200 papers
-    cos_sim = cosine_similarity(power_vector, tester)
+    
+    cos_sim = cosine_similarity(name_vector, tester)
     # find the index of the paper with the highest cosine similarity
     matching_index = cos_sim.argmax()
     # find the indexis of the top 10 papers with the highest cosine similarity
     top_ten = cos_sim.argsort()[0][-10:]
+    top_ten = top_ten[::-1]
+    top_sim = cos_sim[0][top_ten]
+    # find the title of the paper with the highest cosine similarity
+    matching_data = journeys_df.iloc[matching_index,:]
     
+    # change the index of top_ten_titles to the similarity scores
+    matching_data.index = top_sim
+    matching_data.index.name = "Similarity Score"
+    st.write("Top Ten Results")
+    st.write(matching_data)
 
 def main():
     alt_df = pd.read_hdf('Path_By_Researchers_With_Year.h5')
@@ -60,6 +70,7 @@ def main():
     if on:
         name = st.text_input("Input researcher name")
         title = st.text_input("Input a paper title to assist the search")
+        advanced_find(name, title)
     row = find_function(path,indexed_journeys_df)
     plot_map(row)
 
