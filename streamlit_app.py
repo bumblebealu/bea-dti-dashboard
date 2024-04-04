@@ -62,6 +62,7 @@ def main():
     indexed_journeys_df = journeys_df.set_index('@path', inplace=False)
 
     auths, titles = load_tfidf()
+    st.write(auths)
     
     st.title('Researcher Migration')
     path = '/0000-0003-4998-7259'
