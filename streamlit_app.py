@@ -3,11 +3,12 @@ import folium
 import pandas as pd
 from streamlit_folium import folium_static
 import scipy.sparse
+from sklearn.metrics.pairwise import cosine_similarity
 
 @st.cache
 def load_tfidf():
     auths = scipy.sparse.load_npz("transformed_authors.npz")
-    titles = scipy.sparse.load_npz("transformed_titles.npz")
+    titles = scipy.sparse.load_npz("transofmed_titles.npz")
     return auths, titles
 
 
@@ -27,6 +28,22 @@ def plot_map(my_row):
             location_next = (my_row['latitude'][i+1], my_row['longitude'][i+1])
             folium.PolyLine(locations=[location, location_next], color='green', weight=3).add_to(m)
     folium_static(m)
+
+def advanced_find(name, title):
+    name_vector = auths.transform([name])
+    ##title_vector = titles.transform([title])
+    #power_search = st.text_input("Search Papers by Title")
+    #power_vector = trainer.transform([power_search])
+    # word_list = power_search.split(" ") 
+    # word_vector = trainer.transform(word_list) 
+    # st.write(word_vector)
+    # find the cosine similarity between the power search and the first 200 papers
+    cos_sim = cosine_similarity(power_vector, tester)
+    # find the index of the paper with the highest cosine similarity
+    matching_index = cos_sim.argmax()
+    # find the indexis of the top 10 papers with the highest cosine similarity
+    top_ten = cos_sim.argsort()[0][-10:]
+    
 
 def main():
     alt_df = pd.read_hdf('Path_By_Researchers_With_Year.h5')
