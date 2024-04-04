@@ -3,6 +3,13 @@ import folium
 import pandas as pd
 from streamlit_folium import folium_static
 
+@st.cache
+def load_tfidf():
+    auths = scipy.sparse.load_npz("transformed_authors.npz")
+    titles = scipy.sparse.load_npz("transformed_titles.npz")
+    return auths, titles
+
+
 def find_function(path,indexed_journeys_df):
     row = indexed_journeys_df.loc[path]
     return row
@@ -25,7 +32,9 @@ def main():
     journeys_df = pd.read_hdf('author_journeys.h5')
     journeys_df = alt_df
     indexed_journeys_df = journeys_df.set_index('@path', inplace=False)
-    # Set up your Streamlit app layout
+
+    auths, titles = load_tfidf()
+    
     st.title('Researcher Migration')
     path = '/0000-0003-4998-7259'
     path = st.text_input("Write Path Here",path)
