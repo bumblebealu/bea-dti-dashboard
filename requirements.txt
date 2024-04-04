@@ -3,3 +3,4 @@ streamlit_folium == 0.18.0
 pandas
 tables
 scipy
+scikit-learn
