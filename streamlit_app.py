@@ -3,7 +3,7 @@ import folium
 import pandas as pd
 from streamlit_folium import folium_static
 import scipy.sparse
-#from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity
 
 @st.cache
 def load_tfidf():
