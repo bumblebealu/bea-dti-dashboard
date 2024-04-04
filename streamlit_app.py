@@ -29,6 +29,10 @@ def main():
     st.title('Researcher Migration')
     path = '/0000-0003-4998-7259'
     path = st.text_input("Write Path Here",path)
+    on = st.toggle('Advanced Search')
+    if on:
+        name = st.text_input("Input researcher name")
+        title = st.text_input("Input a paper title to assist the search")
     row = find_function(path,indexed_journeys_df)
     plot_map(row)
 
