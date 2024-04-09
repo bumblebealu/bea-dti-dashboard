@@ -32,21 +32,26 @@ def process_data(df, target_country):
         entering.extend(e)
         leaving.extend(l)
     
-    entering_freq = pd.Series(entering).value_counts().reset_index(name='frequency')
-    leaving_freq = pd.Series(leaving).value_counts().reset_index(name='frequency')
+    entering_freq = entering.value_counts().reset_index(name='frequency')
+    leaving_freq = leaving.value_counts().reset_index(name='frequency')
+    entering_freq['country'] = entering_freq['from_country']
+    leaving_freq['country'] = leaving_freq['to_country']
+    entering_freq['entering_frequency'] = entering_freq['frequency']
+    leaving_freq['leaving_frequency'] = leaving_freq['frequency']
 
     merged_df = pd.merge(
-        entering_freq.rename(columns={'index': 'country'}),
-        leaving_freq.rename(columns={'index': 'country'}),
+        entering_freq[['country', 'entering_frequency']],
+        leaving_freq[['country', 'leaving_frequency']],
         on='country',
         how='outer'
-    ).fillna(0)
+    ).fillna(0) 
 
-    merged_df['net_frequency'] = merged_df['frequency_x'] - merged_df['frequency_y']
+    merged_df['net_frequency'] = merged_df['entering_frequency'] - merged_df['leaving_frequency']
+    net_df = merged_df[['country', 'net_frequency']]
 
-    frequency_entering_dict = entering_freq.set_index('index')['frequency'].to_dict()
-    frequency_leaving_dict = leaving_freq.set_index('index')['frequency'].to_dict()
-    frequency_net_dict = merged_df.set_index('country')['net_frequency'].to_dict()
+    frequency_entering_dict = entering_freq.set_index('from_country')['frequency'].to_dict()
+    frequency_leaving_dict = leaving_freq.set_index('to_country')['frequency'].to_dict()
+    frequency_net_dict = net_df.set_index('country')['net_frequency'].to_dict()
 
     return frequency_entering_dict, frequency_leaving_dict, frequency_net_dict
 
