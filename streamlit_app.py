@@ -4,6 +4,7 @@ import folium
 import requests
 from streamlit_folium import folium_static
 import json
+import ast
 
 # Function to load data and preprocess
 @st.cache
@@ -18,6 +19,7 @@ def load_geojson():
     return geo_data
     
 def find_pairs(countries, target_country):
+    countries = ast.literal_eval(countries_str)
     entering_pairs = []
     leaving_pairs = []
     for i in range(1, len(countries)):
@@ -63,9 +65,8 @@ def process_data(df, target_country):
     return merged_df
 
 def plot_choropleth(geojson_data, data, target_country):
-    if data is None or data.empty:
-        st.error("No data available to plot. Please check your data source.")
-        return None
+    
+    data_dict = data.set_index('country').to_dict('index')
 
     m = folium.Map(location=[20, 0], zoom_start=2)
 
@@ -77,7 +78,7 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Entering {target_country}',
-        data=data,
+        data=data_dict,
         columns=['country', 'entering_frequency'],
         key_on='feature.properties.name',
         fill_color='YlGnBu',
@@ -89,7 +90,7 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Leaving {target_country}',
-        data=data,
+        data=data_dict,
         columns=['country', 'leaving_frequency'],
         key_on='feature.properties.name',
         fill_color='YlOrRd',
@@ -101,7 +102,7 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Net Movement in relation to {target_country}',
-        data=data,
+        data=data_dict,
         columns=['country', 'net_frequency'],
         key_on='feature.properties.name',
         fill_color='PiYG',
