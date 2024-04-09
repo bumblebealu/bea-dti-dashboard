@@ -7,7 +7,7 @@ from streamlit_folium import folium_static
 # Function to load data and preprocess
 @st.cache
 def load_data():
-    df = pd.read_hdf('country_chlor_df.csv')
+    df = pd.read_csv('country_chlor_df.csv')
     return df
 
 @st.cache
