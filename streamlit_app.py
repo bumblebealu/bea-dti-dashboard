@@ -94,10 +94,27 @@ def main():
     df = load_data()
     geojson_data = load_geojson()
     
-    countries = [
-        'Portugal', 'United States of America', 'United Kingdom', 'France',
-        # Add the remaining countries as needed...
-    ]
+    countries = ['Portugal', 'United States of America', 'United Kingdom', 'France',
+       'South Africa', 'Italy', 'Japan', 'Denmark', 'Taiwan', 'Russia',
+       'China', 'Canada', 'Argentina', 'Germany', 'Ireland', 'Belgium',
+       'Norway', 'Spain', 'Slovakia', 'Poland', 'Finland', 'Australia',
+       'Switzerland', 'Saudi Arabia', 'Mexico', 'Algeria', 'Brazil',
+       'Netherlands', 'Czechia', 'Armenia', 'Greece', 'Egypt', 'India',
+       'South Korea', 'Sweden', 'Malaysia', 'Iran', 'Iceland', 'Austria',
+       'Chile', 'Ukraine', 'Hungary', 'Serbia', 'Israel', 'Estonia',
+       'Romania', 'Croatia', 'Pakistan', 'Bangladesh', 'Belarus',
+       'Morocco', 'Venezuela', 'Bulgaria', 'Lebanon', 'Vietnam', 'Turkey',
+       'Uzbekistan', 'Puerto Rico', 'Costa Rica', 'Palestine',
+       'New Zealand', 'Libya', 'Colombia', 'Ghana', 'Azerbaijan',
+       'Lithuania', 'Cuba', 'Indonesia', 'Ecuador', 'Slovenia',
+       'Paraguay', 'Cameroon', 'Tunisia', 'Ethiopia', 'Kazakhstan',
+       'North Macedonia', 'Moldova', 'Peru', 'Latvia', 'Botswana',
+       'Georgia', 'Zimbabwe', 'Thailand', 'Nigeria', 'Iraq', 'N. Cyprus',
+       'United Arab Emirates', 'Senegal', 'Philippines', 'Luxembourg',
+       'Jordan', 'Trinidad and Tobago', 'Kyrgyzstan', 'Kenya', 'Cyprus',
+       'Sri Lanka', 'Haiti', 'Dominican Rep.', 'Panama', 'Kuwait',
+       'Somalia', 'Madagascar', 'Uganda', 'Gambia', 'Mongolia', 'Angola',
+       'Uruguay', 'Bosnia and Herz.', 'Albania', 'Nicaragua', 'Yemen']
     
     target_country = st.selectbox('Select a Country', countries)
     if target_country:
