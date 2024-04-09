@@ -37,8 +37,8 @@ def process_data(df, target_country):
         entering.extend(e)
         leaving.extend(l)
     
-    entering_freq = pd.Series(entering).value_counts().reset_index(name='entering_frequency')
-    leaving_freq = pd.Series(leaving).value_counts().reset_index(name='leaving_frequency')
+    entering_freq = entering_freq.dropna(subset=['entering_frequency'])
+    leaving_freq = leaving_freq.dropna(subset=['leaving_frequency'])
 
     merged_df = pd.merge(
         entering_freq.rename(columns={'index': 'country'}),
@@ -49,18 +49,8 @@ def process_data(df, target_country):
 
     merged_df['net_frequency'] = merged_df['entering_frequency'] - merged_df['leaving_frequency']
 
-    # Check if the data is numerical
-    if not pd.api.types.is_numeric_dtype(merged_df['entering_frequency']):
-        st.error("Entering frequency data is not numeric.")
-        return None, None, None
 
-    if not pd.api.types.is_numeric_dtype(merged_df['leaving_frequency']):
-        st.error("Leaving frequency data is not numeric.")
-        return None, None, None
-
-    if not pd.api.types.is_numeric_dtype(merged_df['net_frequency']):
-        st.error("Net frequency data is not numeric.")
-        return None, None, None
+    merged_df['net_frequency'] = merged_df['net_frequency'].fillna(0)
 
     return merged_df
 
@@ -70,7 +60,6 @@ def plot_choropleth(geojson_data, data, target_country):
 
     m = folium.Map(location=[20, 0], zoom_start=2)
 
-    # Debug: Print the data for checking
     st.write("Data for plotting (first 5 rows):")
     st.write(data.head())
 
