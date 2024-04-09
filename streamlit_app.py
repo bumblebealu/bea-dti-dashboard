@@ -32,8 +32,8 @@ def process_data(df, target_country):
         entering.extend(e)
         leaving.extend(l)
     
-    entering_freq = pd.Series(entering).value_counts().reset_index(name='entering_frequency')
-    leaving_freq = pd.Series(leaving).value_counts().reset_index(name='leaving_frequency')
+    entering_freq = pd.Series(entering).value_counts().reset_index(name='frequency')
+    leaving_freq = pd.Series(leaving).value_counts().reset_index(name='frequency')
 
     merged_df = pd.merge(
         entering_freq.rename(columns={'index': 'country'}),
@@ -42,18 +42,21 @@ def process_data(df, target_country):
         how='outer'
     ).fillna(0)
 
-    merged_df['net_frequency'] = merged_df['entering_frequency'] - merged_df['leaving_frequency']
+    merged_df['net_frequency'] = merged_df['frequency_x'] - merged_df['frequency_y']
 
-    return merged_df
+    frequency_entering_dict = entering_freq.set_index('index')['frequency'].to_dict()
+    frequency_leaving_dict = leaving_freq.set_index('index')['frequency'].to_dict()
+    frequency_net_dict = merged_df.set_index('country')['net_frequency'].to_dict()
 
-def plot_choropleth(geojson_data, data, target_country):
+    return frequency_entering_dict, frequency_leaving_dict, frequency_net_dict
+
+def plot_choropleth(geojson_data, entering_dict, leaving_dict, net_dict, target_country):
     m = folium.Map(location=[20, 0], zoom_start=2)
 
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Entering {target_country}',
-        data=data,
-        columns=['country', 'entering_frequency'],
+        data=entering_dict,
         key_on='feature.properties.name',
         fill_color='YlGnBu',
         fill_opacity=0.7,
@@ -64,9 +67,8 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Leaving {target_country}',
-        data=data,
-        columns=['country', 'leaving_frequency'],
-        key_on='feature.properties.name',  
+        data=leaving_dict,
+        key_on='feature.properties.name',
         fill_color='YlOrRd',
         fill_opacity=0.7,
         line_opacity=0.2,
@@ -76,8 +78,7 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Net Movement in relation to {target_country}',
-        data=data,
-        columns=['country', 'net_frequency'],
+        data=net_dict,
         key_on='feature.properties.name',
         fill_color='PiYG',
         fill_opacity=0.7,
@@ -101,8 +102,8 @@ def main():
     
     target_country = st.selectbox('Select a Country', countries)
     if target_country:
-        data = process_data(df, target_country)
-        m = plot_choropleth(geojson_data, data, target_country)
+        entering_dict, leaving_dict, net_dict = process_data(df, target_country)
+        m = plot_choropleth(geojson_data, entering_dict, leaving_dict, net_dict, target_country)
         folium_static(m)
 
 if __name__ == '__main__':
