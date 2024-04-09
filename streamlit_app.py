@@ -66,7 +66,6 @@ def plot_choropleth(geojson_data, entering_dict, leaving_dict, net_dict, target_
         geo_data=geojson_data,
         name=f'Entering {target_country}',
         data=entering_dict,
-        columns=['from_country', 'frequency'],
         key_on='feature.properties.name',
         fill_color='YlGnBu',
         fill_opacity=0.7,
@@ -78,7 +77,6 @@ def plot_choropleth(geojson_data, entering_dict, leaving_dict, net_dict, target_
         geo_data=geojson_data,
         name=f'Leaving {target_country}',
         data=leaving_dict,
-        columns=['to_country', 'frequency'],
         key_on='feature.properties.name',
         fill_color='YlOrRd',
         fill_opacity=0.7,
@@ -90,7 +88,6 @@ def plot_choropleth(geojson_data, entering_dict, leaving_dict, net_dict, target_
         geo_data=geojson_data,
         name=f'Net Movement in relation to {target_country}',
         data=net_dict,
-        columns=['country', 'frequency'],
         key_on='feature.properties.name',
         fill_color='PiYG',
         fill_opacity=0.7,
@@ -100,6 +97,7 @@ def plot_choropleth(geojson_data, entering_dict, leaving_dict, net_dict, target_
 
     folium.LayerControl().add_to(m)
     return m
+
 
 def main():
     st.title('Choropleth Map for Research Migration')
