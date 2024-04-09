@@ -3,6 +3,7 @@ import pandas as pd
 import folium
 import requests
 from streamlit_folium import folium_static
+import json
 
 # Function to load data and preprocess
 @st.cache
