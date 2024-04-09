@@ -49,10 +49,13 @@ def process_data(df, target_country):
         on='country',
         how='outer'
     ).fillna(0)
+    
+    merged_df['entering_frequency'] = merged_df['entering_frequency'].astype(float)
+    merged_df['leaving_frequency'] = merged_df['leaving_frequency'].astype(float)
+    merged_df['net_frequency'] = merged_df['net_frequency'].astype(float)
+    merged_df = merged_df.fillna(0)
 
-    merged_df['net_frequency'] = merged_df['entering_frequency'] - merged_df['leaving_frequency']
-
-
+    merged_df['net_frequency'] = merged_df['entering_frequency'] - merged_df['leaving_frequency'
     merged_df['net_frequency'] = merged_df['net_frequency'].fillna(0)
 
     return merged_df
