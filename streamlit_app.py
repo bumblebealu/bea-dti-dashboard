@@ -12,8 +12,9 @@ def load_data():
 
 @st.cache
 def load_geojson():
-    return requests.get("https://raw.githubusercontent.com/python-visualization/folium/main/examples/data/world-countries.json").json()
-
+    geo_data = requests.get("https://raw.githubusercontent.com/python-visualization/folium/main/examples/data/world-countries.json").json()
+    return geo_data
+    
 def find_pairs(countries, target_country):
     entering_pairs = []
     leaving_pairs = []
