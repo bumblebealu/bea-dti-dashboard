@@ -31,9 +31,12 @@ def process_data(df, target_country):
         e, l = find_pairs(row['country'], target_country)
         entering.extend(e)
         leaving.extend(l)
+
+    entering_df = pd.DataFrame(entering, columns=['from_country', 'to_country'])
+    leaving_df = pd.DataFrame(leaving, columns=['from_country', 'to_country'])  
     
-    entering_freq = pd.Series(entering).value_counts().reset_index(name='frequency')
-    leaving_freq = pd.Series(leaving).value_counts().reset_index(name='frequency')
+    entering_freq = entering_df.value_counts().reset_index(name='frequency')
+    leaving_freq = leaving_df.value_counts().reset_index(name='frequency')
     entering_freq['country'] = entering_freq['from_country']
     leaving_freq['country'] = leaving_freq['to_country']
     entering_freq['entering_frequency'] = entering_freq['frequency']
