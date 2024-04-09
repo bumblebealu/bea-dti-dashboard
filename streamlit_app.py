@@ -12,7 +12,8 @@ def load_data():
 
 @st.cache
 def load_geojson():
-    geo_data = pd.read_json('world-countries.json')
+    with open('world-countries.json') as f:
+        geo_data = json.load(f)
     return geo_data
     
 def find_pairs(countries, target_country):
