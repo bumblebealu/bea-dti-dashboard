@@ -32,8 +32,8 @@ def process_data(df, target_country):
         entering.extend(e)
         leaving.extend(l)
     
-    entering_freq = entering.value_counts().reset_index(name='frequency')
-    leaving_freq = leaving.value_counts().reset_index(name='frequency')
+    entering_freq = pd.Series(entering).value_counts().reset_index(name='frequency')
+    leaving_freq = pd.Series(leaving).value_counts().reset_index(name='frequency')
     entering_freq['country'] = entering_freq['from_country']
     leaving_freq['country'] = leaving_freq['to_country']
     entering_freq['entering_frequency'] = entering_freq['frequency']
