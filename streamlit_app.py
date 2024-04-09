@@ -6,7 +6,6 @@ from streamlit_folium import folium_static
 import json
 import ast
 
-# Function to load data and preprocess
 @st.cache
 def load_data():
     df = pd.read_csv('country_chlor_df.csv')
@@ -39,41 +38,32 @@ def process_data(df, target_country):
 
     entering_freq = pd.Series(entering).value_counts().reset_index(name='entering_frequency')
     leaving_freq = pd.Series(leaving).value_counts().reset_index(name='leaving_frequency')
-    
     entering_freq = entering_freq.dropna(subset=['entering_frequency'])
     leaving_freq = leaving_freq.dropna(subset=['leaving_frequency'])
-
     merged_df = pd.merge(
         entering_freq.rename(columns={'index': 'country'}),
         leaving_freq.rename(columns={'index': 'country'}),
         on='country',
         how='outer'
     ).fillna(0)
-    
     merged_df['entering_frequency'] = merged_df['entering_frequency'].astype(float)
     merged_df['leaving_frequency'] = merged_df['leaving_frequency'].astype(float)
-
     merged_df['net_frequency'] = merged_df['entering_frequency'] - merged_df['leaving_frequency']
     merged_df['net_frequency'] = merged_df['net_frequency'].astype(float)
-    
+
     merged_df = merged_df.fillna(0)
 
     return merged_df
 
 def plot_choropleth(geojson_data, data, target_country):
     
-    data = data.fillna(0)  # Fill NaN with 0
+    data = data.fillna(0)
     data['entering_frequency'] = pd.to_numeric(data['entering_frequency'], errors='coerce').fillna(0)
     data['leaving_frequency'] = pd.to_numeric(data['leaving_frequency'], errors='coerce').fillna(0)
     data['net_frequency'] = pd.to_numeric(data['net_frequency'], errors='coerce').fillna(0)
 
-
     m = folium.Map(location=[20, 0], zoom_start=2)
 
-    st.write("Data for plotting (first 5 rows):")
-    st.write(data.head())
-
-    # Add choropleth layers
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Entering {target_country}',
@@ -118,7 +108,6 @@ def main():
     
     df = load_data()
     geojson_data = load_geojson()
-    
     
     countries = ['Portugal', 'United States of America', 'United Kingdom', 'France',
        'South Africa', 'Italy', 'Japan', 'Denmark', 'Taiwan', 'Russia',
