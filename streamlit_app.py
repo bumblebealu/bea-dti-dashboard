@@ -19,7 +19,7 @@ def load_geojson():
     return geo_data
     
 def find_pairs(countries, target_country):
-    countries = ast.literal_eval(countries_str)
+    countries = ast.literal_eval(countries)
     entering_pairs = []
     leaving_pairs = []
     for i in range(1, len(countries)):
