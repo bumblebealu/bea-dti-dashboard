@@ -36,6 +36,9 @@ def process_data(df, target_country):
         e, l = find_pairs(row['country'], target_country)
         entering.extend(e)
         leaving.extend(l)
+
+    entering_freq = pd.Series(entering).value_counts().reset_index(name='entering_frequency')
+    leaving_freq = pd.Series(leaving).value_counts().reset_index(name='leaving_frequency')
     
     entering_freq = entering_freq.dropna(subset=['entering_frequency'])
     leaving_freq = leaving_freq.dropna(subset=['leaving_frequency'])
