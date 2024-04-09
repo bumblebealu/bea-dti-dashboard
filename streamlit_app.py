@@ -62,7 +62,11 @@ def process_data(df, target_country):
 
 def plot_choropleth(geojson_data, data, target_country):
     
-    data_dict = data.set_index('country').to_dict('index')
+    data = data.fillna(0)  # Fill NaN with 0
+    data['entering_frequency'] = pd.to_numeric(data['entering_frequency'], errors='coerce').fillna(0)
+    data['leaving_frequency'] = pd.to_numeric(data['leaving_frequency'], errors='coerce').fillna(0)
+    data['net_frequency'] = pd.to_numeric(data['net_frequency'], errors='coerce').fillna(0)
+
 
     m = folium.Map(location=[20, 0], zoom_start=2)
 
@@ -73,7 +77,7 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Entering {target_country}',
-        data=data_dict,
+        data= data,
         columns=['country', 'entering_frequency'],
         key_on='feature.properties.name',
         fill_color='YlGnBu',
@@ -85,7 +89,7 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Leaving {target_country}',
-        data=data_dict,
+        data=data,
         columns=['country', 'leaving_frequency'],
         key_on='feature.properties.name',
         fill_color='YlOrRd',
@@ -97,7 +101,7 @@ def plot_choropleth(geojson_data, data, target_country):
     folium.Choropleth(
         geo_data=geojson_data,
         name=f'Net Movement in relation to {target_country}',
-        data=data_dict,
+        data=data,
         columns=['country', 'net_frequency'],
         key_on='feature.properties.name',
         fill_color='PiYG',
