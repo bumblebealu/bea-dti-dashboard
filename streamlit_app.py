@@ -144,6 +144,10 @@ def main():
     
     if target_country:
         data = process_data(df, target_country)
-        
         if data is not None:
-            m = plot_choropleth(geojson_data, data
+            m = plot_choropleth(geojson_data, data, target_country)
+            if m is not None:
+                folium_static(m)
+
+if __name__ == '__main__':
+    main()
